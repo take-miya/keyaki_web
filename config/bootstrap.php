@@ -78,7 +78,7 @@ try {
     Configure::load('keyaki', 'default', false);
     if ($_SERVER['CAKE_ENV'] == 'development') {
         Configure::load('development/app', 'default', false);
-    } elseif ($_SERVER['CAKE_ENV'] == 'development') {
+    } elseif ($_SERVER['CAKE_ENV'] == 'production') {
         Configure::load('production/app', 'default', false);
     }
 } catch (\Exception $e) {
