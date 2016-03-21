@@ -45,6 +45,6 @@ class Post extends Entity {
                 'sound' => 'default',
                 'color' => '#a0d468',
             ],
-                ], ['type' => 'json', 'headers' => ['Authorization' => 'key=' . 'AIzaSyD0Pv1ffpwS8T1Inlkb1oFDh4DhFzdRA_E']]);
+                ], ['type' => 'json', 'headers' => ['Authorization' => 'key=' . \Cake\Core\Configure::read('gcm.api_key')]]);
     }
 }
