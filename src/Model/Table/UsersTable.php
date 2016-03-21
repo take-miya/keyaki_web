@@ -25,7 +25,7 @@ class UsersTable extends Table
         parent::initialize($config);
 
         $this->table('users');
-        $this->displayField('id');
+        $this->displayField('token');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');

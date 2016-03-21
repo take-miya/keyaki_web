@@ -33,18 +33,19 @@ class Post extends Entity {
 
     public function push() {
         $http = new Client();
-        $tokens = \Cake\ORM\TableRegistry::get('Users')->find(['field' => 'token'])->where(['deleted' => 'null'])->toArray();
+        $tokens = \Cake\ORM\TableRegistry::get('Users')->find('list')->toArray();
         // ToDo: tokens.length > 1000 のとき、分割処理
-        $response = $http->post('https://gcm-http.googleapis.com/gcm/send', [
-            'registration_ids' => $tokens,
+        $request = [
+            'registration_ids' => array_values($tokens),
             'notification' => [
                 'title' => 'keyaki',
-                'icon' => '@drawable/notification',
+                'icon' => '@mipmap/ic_launcher',
                 'click_action' => 'KEYAKIAPP_NOTIFICATION_OFFICIAL_BLOG_UPDATE',
                 'body' => 'ブログ更新通知',
                 'sound' => 'default',
                 'color' => '#a0d468',
             ],
-                ], ['type' => 'json', 'headers' => ['Authorization' => 'key=' . \Cake\Core\Configure::read('gcm.api_key')]]);
+       ];
+        $response = $http->post('https://gcm-http.googleapis.com/gcm/send', json_encode($request), ['type' => 'json', 'headers' => ['Authorization' => 'key=' . \Cake\Core\Configure::read('gcm.api_key')]]);
     }
 }

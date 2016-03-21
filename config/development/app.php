@@ -325,6 +325,6 @@ return [
         'defaults' => 'php',
     ],
     'gcm' => [
-        'api_key' => 'hogehogehogehoge',
+        'api_key' => 'AIzaSyD3_DZGFkYcIb7qbs2jbECL6tBXEuBxxW0',
     ],
 ];
