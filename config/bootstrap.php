@@ -78,6 +78,8 @@ try {
     Configure::load('keyaki', 'default', false);
     if ($_SERVER['CAKE_ENV'] == 'development') {
         Configure::load('development/app', 'default', false);
+    } elseif ($_SERVER['CAKE_ENV'] == 'development') {
+        Configure::load('production/app', 'default', false);
     }
 } catch (\Exception $e) {
     exit($e->getMessage() . "\n");
