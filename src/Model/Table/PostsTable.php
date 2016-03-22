@@ -52,6 +52,11 @@ class PostsTable extends Table
         $validator
             ->requirePresence('title', 'create')
             ->notEmpty('title');
+        
+        $validator
+                ->requirePresence('published', 'create')
+                ->notEmpty('published')
+                ->dateTime('published');
 
         return $validator;
     }
@@ -71,6 +76,8 @@ class PostsTable extends Table
     
     public function afterSaveCommit($event, $entity, $option)
     {
-        $entity->push();
+        if (isset($option['push']) && $option['push'] === true) {
+            $entity->push();
+        }
     }
 }

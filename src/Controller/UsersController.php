@@ -27,7 +27,7 @@ class UsersController extends AppController {
                 $message = $user->errors();
             }
         }
-        echo json_encode(compact('result', 'message'));
+        echo json_encode(compact('result', 'message', 'user'));
     }
 
 }
