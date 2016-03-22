@@ -21,7 +21,7 @@ class CheckBlogShell extends Shell {
                     $postTitle = trim(pq($p)->text());
                     $c++;
                 } elseif ($c === 1) {
-                    $postMemberName = trim(pq($p)->text());
+                    $postMemeberName = trim(pq($p)->text());
                     break;
                 }
             }
@@ -34,7 +34,7 @@ class CheckBlogShell extends Shell {
             if (TableRegistry::get('Posts')->exists(['id' => $postId])) {
                 break;
             } else {
-                $member = TableRegistry::get('Members')->find()->where(['name' => $postMemberName])->first();
+                $member = TableRegistry::get('Members')->find()->where(['name' => $postMemeberName])->first();
                 $post = TableRegistry::get('Posts')->newEntity(['id' => $postId, 'member_id' => $member->id, 'title' => $postTitle, 'published' => $postTime]);
                 TableRegistry::get('Posts')->save($post, ['push' => true]);
             }
