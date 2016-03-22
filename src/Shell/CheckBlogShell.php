@@ -35,7 +35,8 @@ class CheckBlogShell extends Shell {
                 break;
             } else {
                 $member = TableRegistry::get('Members')->find()->where(['name' => $postMemberName])->first();
-                $post = TableRegistry::get('Posts')->newEntity(['id' => $postId, 'member_id' => $member->id, 'title' => $postTitle, 'published' => $postTime]);
+                $post = TableRegistry::get('Posts')->newEntity(['id' => $postId, 'title' => $postTitle, 'published' => $postTime]);
+                $post->member = $member;
                 TableRegistry::get('Posts')->save($post, ['push' => true]);
             }
         }

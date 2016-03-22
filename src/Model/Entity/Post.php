@@ -38,10 +38,10 @@ class Post extends Entity {
         $request = [
             'registration_ids' => array_values($tokens),
             'notification' => [
-                'title' => 'keyaki',
+                'title' => $this->member->name,
                 'icon' => '@mipmap/ic_launcher',
                 'click_action' => 'KEYAKIAPP_NOTIFICATION_OFFICIAL_BLOG_UPDATE',
-                'body' => 'ブログ更新通知',
+                'body' => $this->title,
                 'sound' => 'default',
                 'color' => '#a0d468',
             ],
