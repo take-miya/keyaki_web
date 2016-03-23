@@ -20,7 +20,6 @@ class PostsController extends AppController {
         if ($this->request->is('get')) {
             $posts = $this->Posts->find()->where(['modified >' => $updatedFrom]);
             $last_updated = $this->Posts->find()->max('modified')->modified;
-            var_dump($last_updated);
             $result = 'success';
         }
         echo json_encode(compact('result', 'last_updated', 'posts'));
