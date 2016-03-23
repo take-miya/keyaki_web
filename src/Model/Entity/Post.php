@@ -30,6 +30,11 @@ class Post extends Entity {
     protected $_accessible = [
         '*' => true,
     ];
+    
+    protected $_hidden = [
+        'created',
+        'modified',
+    ];
 
     public function push() {
         $http = new Client();
@@ -45,7 +50,8 @@ class Post extends Entity {
                 'sound' => 'default',
                 'color' => '#a0d468',
             ],
-       ];
+        ];
         $response = $http->post('https://gcm-http.googleapis.com/gcm/send', json_encode($request), ['type' => 'json', 'headers' => ['Authorization' => 'key=' . \Cake\Core\Configure::read('gcm.api_key')]]);
     }
+
 }
