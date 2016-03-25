@@ -44,11 +44,14 @@ class Post extends Entity {
             'registration_ids' => array_values($tokens),
             'notification' => [
                 'title' => $this->member->name,
-                'icon' => '@mipmap/ic_launcher',
+                'icon' => '@mipmap/notification',
                 'click_action' => 'KEYAKIAPP_NOTIFICATION_OFFICIAL_BLOG_UPDATE',
                 'body' => $this->title,
                 'sound' => 'default',
-                'color' => '#a0d468',
+                'color' => '#ffffff',
+            ],
+            'data' => [
+                'post_id' => "{$this->id}",
             ],
         ];
         $response = $http->post('https://gcm-http.googleapis.com/gcm/send', json_encode($request), ['type' => 'json', 'headers' => ['Authorization' => 'key=' . \Cake\Core\Configure::read('gcm.api_key')]]);

@@ -4,15 +4,16 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * User Entity.
+ * Member Entity.
  *
  * @property int $id
- * @property string $token
+ * @property string $name
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
- * @property string $deleted
+ * @property \Cake\I18n\Time $deleted
+ * @property \App\Model\Entity\Post[] $posts
  */
-class User extends Entity
+class Member extends Entity
 {
 
     /**
@@ -30,9 +31,7 @@ class User extends Entity
     ];
 
     protected $_hidden = [
-        'id',
         'created',
         'modified',
-        'deleted',
     ];
 }

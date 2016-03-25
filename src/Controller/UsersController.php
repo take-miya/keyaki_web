@@ -19,7 +19,11 @@ class UsersController extends AppController {
     public function add() {
         $this->autoRender = false;
         if ($this->request->is('post')) {
-            $user = $this->Users->newEntity($this->request->data('user'));
+            $user = $this->Users->find()->where(['token' => $this->request->data('user.token')])->first();
+            if ($user == null) {
+                $user = $this->Users->newEntity();
+            }
+            $user = $this->Users->patchEntity($user, $this->request->data('user'));
             if ($this->Users->save($user)) {
                 $result = 'success';
             } else {
