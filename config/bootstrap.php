@@ -80,6 +80,8 @@ try {
         Configure::load('development/app', 'default', false);
     } elseif ($_SERVER['CAKE_ENV'] == 'production') {
         Configure::load('production/app', 'default', false);
+    } elseif ($_SERVER['CAKE_ENV'] == 'staging') {
+        Configure::load('staging/app', 'default', false);
     }
 } catch (\Exception $e) {
     exit($e->getMessage() . "\n");
