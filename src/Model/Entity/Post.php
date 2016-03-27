@@ -54,7 +54,9 @@ class Post extends Entity {
                 'post_id' => "{$this->id}",
             ],
         ];
+        \Cake\Log\Log::debug('request: '.json_encode($request)); 
         $response = $http->post('https://gcm-http.googleapis.com/gcm/send', json_encode($request), ['type' => 'json', 'headers' => ['Authorization' => 'key=' . \Cake\Core\Configure::read('gcm.api_key')]]);
+        \Cake\Log\Log::debug('response: '. $response->body());
     }
 
 }
