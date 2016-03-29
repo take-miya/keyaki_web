@@ -42,7 +42,7 @@ class Item extends Entity {
             'notification' => [
                 'title' => $this->matome->title,
                 'icon' => '@mipmap/notification',
-                'click_action' => 'KEYAKIAPP_NOTIFICATION_OFFICIAL_BLOG_UPDATE',
+                'click_action' => 'TAKEMIYA_KEYAKI_NOTIFICATION_MATOME_UPDATE',
                 'body' => $this->title,
                 'sound' => 'default',
                 'color' => '#ffffff',
