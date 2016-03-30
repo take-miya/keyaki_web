@@ -41,7 +41,7 @@ class Topic extends Entity {
 //        $request = [
 //            'registration_ids' => array_values($tokens),
 //            'notification' => [
-//                'title' => 'オフィシャルニュース',
+//                'title' => '欅坂46ニュース',
 //                'icon' => '@mipmap/notification',
 //                'click_action' => 'TAKEMIYA_KEYAKI_NOTIFICATION_OFFICIAL_NEWS_UPDATE',
 //                'body' => $this->title,
