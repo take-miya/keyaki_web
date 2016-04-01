@@ -35,7 +35,8 @@ class Item extends Entity {
 
     public function push() {
         $http = new Client();
-        $tokens = \Cake\ORM\TableRegistry::get('Users')->find('list')->toArray();
+        $matomeIdBit = 1 << ($this->matome_id - 1);
+        $tokens = \Cake\ORM\TableRegistry::get('Users')->find('list')->where(['pushable_matomes &' => $matomeIdBit])->toArray();
         // ToDo: tokens.length > 1000 のとき、分割処理
         $request = [
             'registration_ids' => array_values($tokens),
