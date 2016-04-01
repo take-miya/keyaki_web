@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model\Table;
 
 use App\Model\Entity\User;
@@ -11,8 +12,7 @@ use Cake\Validation\Validator;
  * Users Model
  *
  */
-class UsersTable extends Table
-{
+class UsersTable extends Table {
 
     /**
      * Initialize method
@@ -20,8 +20,7 @@ class UsersTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
-    {
+    public function initialize(array $config) {
         parent::initialize($config);
 
         $this->table('users');
@@ -37,19 +36,27 @@ class UsersTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
-    {
+    public function validationDefault(Validator $validator) {
         $validator
-            ->integer('id')
-            ->allowEmpty('id', 'create');
+                ->integer('id')
+                ->allowEmpty('id', 'create');
 
         $validator
-            ->requirePresence('token', 'create')
-            ->notEmpty('token');
+                ->requirePresence('token', 'create')
+                ->notEmpty('token');
 
         $validator
-            ->allowEmpty('deleted');
+                ->integer('pushable_members')
+                ->allowEmpty('pushable_members');
+
+        $validator
+                ->integer('pushable_matomes')
+                ->allowEmpty('pushable_matomes');
+
+        $validator
+                ->allowEmpty('deleted');
 
         return $validator;
     }
+
 }

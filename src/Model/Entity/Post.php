@@ -38,7 +38,8 @@ class Post extends Entity {
 
     public function push() {
         $http = new Client();
-        $tokens = \Cake\ORM\TableRegistry::get('Users')->find('list')->toArray();
+        $memberIdBit = 1 << ($this->member_id - 1);
+        $tokens = \Cake\ORM\TableRegistry::get('Users')->find('list')->where(["pushable_members &&{$memberIdBit}" => $memberIdBit])->toArray();
         // ToDo: tokens.length > 1000 のとき、分割処理
         $request = [
             'registration_ids' => array_values($tokens),
