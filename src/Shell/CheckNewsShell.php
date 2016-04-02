@@ -17,7 +17,7 @@ class CheckNewsShell extends Shell {
             $a = pq($li)->find('a');
             $topicUrl = pq($li)->find('a')->attr('href');
             $topicTitle = pq($li)->find('a')->text();
-            $topicTime = \DateTime::createFromFormat('Y.m.d H:i:s', pq($li)->find('time')->text().' 00:00:00');
+            $topicTime = \DateTime::createFromFormat('Y.m.d H:i:s', pq($li)->find('time')->text().date(' H:i:s'));
 
             preg_match('/cd=([A-Za-z0-9]+)/', $topicUrl, $m);
             $topicId = $m[1];
