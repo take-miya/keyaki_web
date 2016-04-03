@@ -46,13 +46,13 @@ class Post extends Entity {
             'notification' => [
                 'title' => $this->member->name,
                 'icon' => '@mipmap/notification',
-                'click_action' => 'KEYAKIAPP_NOTIFICATION_OFFICIAL_BLOG_UPDATE',
+                'click_action' => 'TAKEMIYA_KEYAKI_NOTIFICATION_OFFICIAL_BLOG_UPDATE',
                 'body' => $this->title,
                 'sound' => 'default',
                 'color' => '#ffffff',
             ],
             'data' => [
-                'post_id' => "{$this->id}",
+                'url' => \Cake\Core\Configure::read('post.url').$this->id,
             ],
         ];
         \Cake\Log\Log::debug('request: '.json_encode($request)); 
