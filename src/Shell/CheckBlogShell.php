@@ -26,7 +26,7 @@ class CheckBlogShell extends Shell {
                 }
             }
             foreach (pq($li)['.box-blog']->find('time') as $time) {
-                $postTime = \DateTime::createFromFormat('Y.m.d H:i:s', pq($time)->text().':00');
+                $postTime = \DateTime::createFromFormat('Y.m.d H:i:s', pq($time)->text() . ':00');
                 break;
             }
             preg_match('/id=(\d+)/', $postUrl, $m);
@@ -35,6 +35,27 @@ class CheckBlogShell extends Shell {
                 break;
             } else {
                 $member = TableRegistry::get('Members')->find()->where(['name' => $postMemberName])->first();
+                $post = TableRegistry::get('Posts')->newEntity(['id' => $postId, 'title' => $postTitle, 'published' => $postTime]);
+                $post->member = $member;
+                TableRegistry::get('Posts')->save($post, ['push' => true]);
+            }
+        }
+
+        foreach ($phpQuery['.box-manageBlog']->find('ul')->find('li') as $li) {
+            $postUrl = pq($li)->find('a')->attr('href');
+            $c = 0;
+            $postTitle = trim(pq($li)['.txt']->text());
+            $postTime = \DateTime::createFromFormat('Y.m.d', pq($li)->find('time')->text());
+
+            if (preg_match('/id=(\d+)/', $postUrl, $m)) {
+                $postId = (int) $m[1];
+            } else {
+                break;
+            }
+            if (TableRegistry::get('Posts')->exists(['id' => $postId])) {
+                break;
+            } else {
+                $member = TableRegistry::get('Members')->get(32);
                 $post = TableRegistry::get('Posts')->newEntity(['id' => $postId, 'title' => $postTitle, 'published' => $postTime]);
                 $post->member = $member;
                 TableRegistry::get('Posts')->save($post, ['push' => true]);
