@@ -55,7 +55,7 @@ class CheckBlogShell extends Shell {
             if (TableRegistry::get('Posts')->exists(['id' => $postId])) {
                 break;
             } else {
-                $member = TableRegistry::get('Members')->get(32);
+                $member = TableRegistry::get('Members')->get(999);
                 $post = TableRegistry::get('Posts')->newEntity(['id' => $postId, 'title' => $postTitle, 'published' => $postTime]);
                 $post->member = $member;
                 TableRegistry::get('Posts')->save($post, ['push' => true]);
