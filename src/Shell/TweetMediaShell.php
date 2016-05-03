@@ -31,6 +31,9 @@ class TweetMediaShell extends Shell {
                 file_put_contents($path, $img); 
                 $imgPath[] = $path;
                 $count++;
+                if ($count >= 4) {
+                    break;
+                }
             }
             if (count($imgPath) > 0) {
                 $post->twitter_media_url = self::tweetPost($postUrl, self::uploadMedia($imgPath));
@@ -64,6 +67,7 @@ class TweetMediaShell extends Shell {
             return $statuses->extended_entities->media[0]->display_url;
         } else {
             \Cake\Log\Log::error('url:'.$url);
+            return '';
         } 
     }
 
