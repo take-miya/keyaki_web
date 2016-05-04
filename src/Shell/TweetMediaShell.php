@@ -21,6 +21,7 @@ class TweetMediaShell extends Shell {
             $page = file_get_contents($postUrl);
         
             $post->twitter_media_url = '';
+            $isExceed = false;
             if ($page) {
                 $phpQuery = \phpQuery::newDocument($page);
                 $count = 0;
@@ -38,6 +39,9 @@ class TweetMediaShell extends Shell {
                 }
                 if (count($imgPath) > 0) {
                     $post->twitter_media_url = self::tweetPost($postUrl, self::uploadMedia($imgPath));
+                    if ($post->twitter_media_url == '') {
+                        $isExceed = true;
+                    }
                 } else {
                     \Cake\Log\Log::error('no image url:'.$postUrl);
                 }
@@ -45,7 +49,7 @@ class TweetMediaShell extends Shell {
                 \Cake\Log\Log::error('cannot fetch blog url:'.$postUrl);
             }
             TableRegistry::get('Posts')->save($post);
-            if ($post->twitter_media_url == '') {
+            if ($isExceed) {
                 return;
             }
         }
@@ -56,12 +60,20 @@ class TweetMediaShell extends Shell {
         $connection = self::getConnection();
         foreach ($imgPath as $path) {
             $media = $connection->upload('media/upload', ['media' => $path]);
-            $mediaIds[] = $media->media_id_string;
+            if ($connection->getLastHttpCode() == 200) {
+                $mediaIds[] = $media->media_id_string;
+            } else {
+                \Cake\Log\Log::error('cannot upload image url:'.$url);
+                return [];
+            }
         }
         return $mediaIds;
     }
 
-    private static function tweetPost($url, $mediaIds = null) {
+    private static function tweetPost($url, $mediaIds) {
+        if (count($mediaIds) == 0) {
+            return '';
+        }
         $connection = self::getConnection();
         $parameters = [
             'status' => $url,
