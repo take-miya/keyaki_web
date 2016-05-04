@@ -21,7 +21,6 @@ class TweetMediaShell extends Shell {
             $page = file_get_contents($postUrl);
         
             $post->twitter_media_url = '';
-            $isExceed = false;
             if ($page) {
                 $phpQuery = \phpQuery::newDocument($page);
                 $count = 0;
@@ -40,7 +39,7 @@ class TweetMediaShell extends Shell {
                 if (count($imgPath) > 0) {
                     $post->twitter_media_url = self::tweetPost($postUrl, self::uploadMedia($imgPath));
                     if ($post->twitter_media_url == '') {
-                        $isExceed = true;
+                        return;
                     }
                 } else {
                     \Cake\Log\Log::error('no image url:'.$postUrl);
@@ -49,9 +48,6 @@ class TweetMediaShell extends Shell {
                 \Cake\Log\Log::error('cannot fetch blog url:'.$postUrl);
             }
             TableRegistry::get('Posts')->save($post);
-            if ($isExceed) {
-                return;
-            }
         }
     }
 
