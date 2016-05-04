@@ -45,6 +45,9 @@ class TweetMediaShell extends Shell {
                 \Cake\Log\Log::error('cannot fetch blog url:'.$postUrl);
             }
             TableRegistry::get('Posts')->save($post);
+            if ($post->twitter_media_url == '') {
+                return;
+            }
         }
     }
 
