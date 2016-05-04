@@ -12,38 +12,40 @@ use Abraham\TwitterOAuth\TwitterOAuth;
 class TweetMediaShell extends Shell {
 
     public function main() {
-        $post = TableRegistry::get('Posts')->find()->where(['twitter_media_url IS' => NULL])->first();
-        if (!$post) {
-            return;
-        }
-        $postUrl = \Cake\Core\Configure::read('post.url').$post->id;
-        $page = file_get_contents($postUrl);
+        while (1) {
+            $post = TableRegistry::get('Posts')->find()->where(['twitter_media_url IS' => NULL])->first();
+            if (!$post) {
+                return;
+            }
+            $postUrl = \Cake\Core\Configure::read('post.url').$post->id;
+            $page = file_get_contents($postUrl);
         
-        $post->twitter_media_url = '';
-        if ($page) {
-            $phpQuery = \phpQuery::newDocument($page);
-            $count = 0;
-            $imgPath = [];
-            foreach ($phpQuery['.box-article']->find('img') as $img) {
-                $src = $img->getAttribute('src');
-                $img = file_get_contents('http://www.keyakizaka46.com/'.$src);
-                $path = '/data/img/'.$post->id.'-'.$count.'.jpg';
-                file_put_contents($path, $img); 
-                $imgPath[] = $path;
-                $count++;
-                if ($count >= 4) {
-                    break;
+            $post->twitter_media_url = '';
+            if ($page) {
+                $phpQuery = \phpQuery::newDocument($page);
+                $count = 0;
+                $imgPath = [];
+                foreach ($phpQuery['.box-article']->find('img') as $img) {
+                    $src = $img->getAttribute('src');
+                    $img = file_get_contents('http://www.keyakizaka46.com/'.$src);
+                    $path = '/data/img/'.$post->id.'-'.$count.'.jpg';
+                    file_put_contents($path, $img); 
+                    $imgPath[] = $path;
+                    $count++;
+                    if ($count >= 4) {
+                        break;
+                    }
                 }
-            }
-            if (count($imgPath) > 0) {
-                $post->twitter_media_url = self::tweetPost($postUrl, self::uploadMedia($imgPath));
+                if (count($imgPath) > 0) {
+                    $post->twitter_media_url = self::tweetPost($postUrl, self::uploadMedia($imgPath));
+                } else {
+                    \Cake\Log\Log::error('no image url:'.$postUrl);
+                }
             } else {
-                \Cake\Log\Log::error('no image url:'.$postUrl);
+                \Cake\Log\Log::error('cannot fetch blog url:'.$postUrl);
             }
-        } else {
-            \Cake\Log\Log::error('cannot fetch blog url:'.$postUrl);
+            TableRegistry::get('Posts')->save($post);
         }
-        TableRegistry::get('Posts')->save($post);
     }
 
     private static function uploadMedia($imgPath) {
