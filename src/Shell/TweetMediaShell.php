@@ -27,7 +27,14 @@ class TweetMediaShell extends Shell {
                 $imgPath = [];
                 foreach ($phpQuery['.box-article']->find('img') as $img) {
                     $src = $img->getAttribute('src');
+                    if (preg_match('/gif$/', $src) || $src == '') {
+                        continue;
+                    }
                     $img = file_get_contents('http://www.keyakizaka46.com/'.$src);
+                    if (!$img) {
+                        $count++;
+                        continue;
+                    }
                     $path = '/data/img/'.$post->id.'-'.$count.'.jpg';
                     file_put_contents($path, $img); 
                     $imgPath[] = $path;
@@ -59,7 +66,7 @@ class TweetMediaShell extends Shell {
             if ($connection->getLastHttpCode() == 200) {
                 $mediaIds[] = $media->media_id_string;
             } else {
-                \Cake\Log\Log::error('cannot upload image url:'.$url);
+                \Cake\Log\Log::error('cannot upload image path:'.$path);
                 return [];
             }
         }
