@@ -41,6 +41,9 @@ class Post extends Entity {
         if ($this->member_id < 33) {
             $memberIdBit = 1 << ($this->member_id - 1);
             $tokens = \Cake\ORM\TableRegistry::get('Users')->find('list')->where(['pushable_members &' => $memberIdBit])->toArray();
+        } elseif ($this->member_id < 65) {
+            $memberIdBit = 1 << ($this->member_id - 33);
+            $tokens = \Cake\ORM\TableRegistry::get('Users')->find('list')->where(['pushable_members2 &' => $memberIdBit])->toArray();
         } else {
             $tokens = \Cake\ORM\TableRegistry::get('Users')->find('list')->toArray();
         }

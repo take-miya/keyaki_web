@@ -50,6 +50,10 @@ class UsersTable extends Table {
                 ->allowEmpty('pushable_members');
 
         $validator
+                ->integer('pushable_members2')
+                ->allowEmpty('pushable_members2');
+
+        $validator
                 ->integer('pushable_matomes')
                 ->allowEmpty('pushable_matomes');
 
