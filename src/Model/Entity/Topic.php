@@ -46,6 +46,7 @@ class Topic extends Entity {
                 'click_action' => 'TAKEMIYA_KEYAKI_NOTIFICATION_OFFICIAL_NEWS_UPDATE',
                 'body' => $this->title,
                 'sound' => 'default',
+                'color' => '#a0d468',
             ],
             'data' => [
                 'url' => \Cake\Core\Configure::read('news.url')."{$this->id}",

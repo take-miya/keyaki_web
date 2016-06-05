@@ -46,6 +46,7 @@ class Item extends Entity {
                 'click_action' => 'TAKEMIYA_KEYAKI_NOTIFICATION_MATOME_UPDATE',
                 'body' => $this->title,
                 'sound' => 'default',
+                'color' => '#a0d468',
             ],
             'data' => [
                 'url' => "{$this->url}",

@@ -56,6 +56,7 @@ class Post extends Entity {
                 'click_action' => 'TAKEMIYA_KEYAKI_NOTIFICATION_OFFICIAL_BLOG_UPDATE',
                 'body' => $this->title,
                 'sound' => 'default',
+                'color' => '#a0d468',
             ],
             'data' => [
                 'url' => \Cake\Core\Configure::read('post.url').$this->id,
