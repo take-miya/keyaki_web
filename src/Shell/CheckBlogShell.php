@@ -32,7 +32,7 @@ class CheckBlogShell extends Shell {
             preg_match('/id=(\d+)/', $postUrl, $m);
             $postId = (int) $m[1];
             if (TableRegistry::get('Posts')->exists(['id' => $postId])) {
-                break;
+                continue;
             } else {
                 $member = TableRegistry::get('Members')->find()->where(['name' => $postMemberName])->first();
                 $post = TableRegistry::get('Posts')->newEntity(['id' => $postId, 'title' => $postTitle, 'published' => $postTime]);
