@@ -29,13 +29,16 @@ class TweetMediaShell extends Shell {
                 $count = 0;
                 $imgPath = [];
                 foreach ($phpQuery['.box-article']->find('img') as $img) {
+                    if ($src == '') {
+                        continue;
+                    }
                     $src = 'http://www.keyakizaka46.com' . $img->getAttribute('src');
                     var_dump($src);
                     $photo = TableRegistry::get('Photos')->newEntity();
                     $photo->url = $src;
                     $photo->post_id = $post->id;
                     TableRegistry::get('Photos')->save($photo);
-                    if (preg_match('/gif$/', $src) || $src == '') {
+                    if (preg_match('/gif$/', $src)) {
                         continue;
                     }
                     $img = file_get_contents($src);
