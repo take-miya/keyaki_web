@@ -31,5 +31,10 @@ class Photo extends Entity {
         '*' => true,
         'id' => false,
     ];
+    
+    protected $_hidden = [
+        'created',
+        'modified',
+    ];
 
 }
