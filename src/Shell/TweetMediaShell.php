@@ -15,7 +15,7 @@ class TweetMediaShell extends Shell {
         $posts = TableRegistry::get('Posts')->find()->where(['twitter_media_url IS' => NULL]);
         //$posts = TableRegistry::get('Posts')->find();
 
-        foreach($posts as $post) {
+        foreach ($posts as $post) {
             if (!$post) {
                 return;
             }
@@ -29,10 +29,11 @@ class TweetMediaShell extends Shell {
                 $count = 0;
                 $imgPath = [];
                 foreach ($phpQuery['.box-article']->find('img') as $img) {
+                    $src = $img->getAttribute('src');
                     if ($src == '') {
                         continue;
                     }
-                    $src = 'http://www.keyakizaka46.com' . $img->getAttribute('src');
+                    $src = 'http://www.keyakizaka46.com' . $src;
                     var_dump($src);
                     $photo = TableRegistry::get('Photos')->newEntity();
                     $photo->url = $src;
