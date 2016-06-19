@@ -66,6 +66,7 @@ class PhotosTable extends Table {
      */
     public function buildRules(RulesChecker $rules) {
         $rules->add($rules->existsIn(['post_id'], 'Posts'));
+        $rules->add($rules->isUnique(['url', 'post_id']));
         return $rules;
     }
 
