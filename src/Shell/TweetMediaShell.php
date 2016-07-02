@@ -51,9 +51,6 @@ class TweetMediaShell extends Shell {
                     file_put_contents($path, $img);
                     $imgPath[] = $path;
                     $count++;
-                    if ($count >= 4) {
-                        break;
-                    }
                 }
                 if (count($imgPath) > 0) {
                     $post->twitter_media_url = self::tweetPost($postUrl, self::uploadMedia($imgPath));
@@ -89,6 +86,7 @@ class TweetMediaShell extends Shell {
         if (count($mediaIds) == 0) {
             return '';
         }
+        $mediaIds = array_slice($mediaIds, 0, 4);
         $connection = self::getConnection();
         $parameters = [
             'status' => $url,
