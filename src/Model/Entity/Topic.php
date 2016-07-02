@@ -14,7 +14,7 @@ use Cake\Network\Http\Client;
  * @property \Cake\I18n\Time $modified
  * @property \Cake\I18n\Time $deleted
  */
-class Topic extends Entity {
+class Topic extends AppEntity {
 
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -37,24 +37,8 @@ class Topic extends Entity {
     public function push() {
         $http = new Client();
         $tokens = \Cake\ORM\TableRegistry::get('Users')->find('list')->toArray();
-        // ToDo: tokens.length > 1000 のとき、分割処理
-        $request = [
-            'registration_ids' => array_values($tokens),
-            'priority' => 'high',
-            'notification' => [
-                'title' => '欅坂46ニュース',
-                'icon' => '@mipmap/notification',
-                'click_action' => 'TAKEMIYA_KEYAKI_NOTIFICATION_OFFICIAL_NEWS_UPDATE',
-                'body' => $this->title,
-                'sound' => 'default',
-            ],
-            'data' => [
-                'url' => \Cake\Core\Configure::read('news.url')."{$this->id}",
-            ],
-        ];
-        \Cake\Log\Log::debug('request: '.json_encode($request)); 
-        $response = $http->post('https://gcm-http.googleapis.com/gcm/send', json_encode($request), ['type' => 'json', 'headers' => ['Authorization' => 'key=' . \Cake\Core\Configure::read('gcm.api_key')]]);
-        \Cake\Log\Log::debug('response: '. $response->body());
+        $data = ['url' => \Cake\Core\Configure::read('news.url')."{$this->id}"];
+        parent::push($tokens, '欅坂46ニュース', 'TAKEMIYA_KEYAKI_NOTIFICATION_OFFICIAL_NEWS_UPDATE', $this->title, $data);
     }
 
 }

@@ -17,7 +17,7 @@ use Cake\Network\Http\Client;
  * @property \Cake\I18n\Time $modified
  * @property \Cake\I18n\Time $deleted
  */
-class Item extends Entity {
+class Item extends AppEntity {
 
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -37,23 +37,8 @@ class Item extends Entity {
         $http = new Client();
         $matomeIdBit = 1 << ($this->matome_id - 1);
         $tokens = \Cake\ORM\TableRegistry::get('Users')->find('list')->where(['pushable_matomes &' => $matomeIdBit])->toArray();
-        // ToDo: tokens.length > 1000 のとき、分割処理
-        $request = [
-            'registration_ids' => array_values($tokens),
-            'notification' => [
-                'title' => $this->matome->title,
-                'icon' => '@mipmap/notification',
-                'click_action' => 'TAKEMIYA_KEYAKI_NOTIFICATION_MATOME_UPDATE',
-                'body' => $this->title,
-                'sound' => 'default',
-            ],
-            'data' => [
-                'url' => "{$this->url}",
-            ],
-        ];
-        \Cake\Log\Log::debug('request: ' . json_encode($request));
-        $response = $http->post('https://gcm-http.googleapis.com/gcm/send', json_encode($request), ['type' => 'json', 'headers' => ['Authorization' => 'key=' . \Cake\Core\Configure::read('gcm.api_key')]]);
-        \Cake\Log\Log::debug('response: ' . $response->body());
+        $data = ['url' => "{$this->url}"];
+        parent::push($tokens, $this->matome->title, 'TAKEMIYA_KEYAKI_NOTIFICATION_MATOME_UPDATE', $this->title, $data);
     }
 
 }

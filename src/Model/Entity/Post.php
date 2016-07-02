@@ -16,7 +16,7 @@ use Cake\Network\Http\Client;
  * @property \Cake\I18n\Time $modified
  * @property \Cake\I18n\Time $deleted
  */
-class Post extends Entity {
+class Post extends AppEntity {
 
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -46,25 +46,8 @@ class Post extends Entity {
             $tokens = \Cake\ORM\TableRegistry::get('Users')->find('list')->where(['pushable_members2 &' => $memberIdBit])->toArray();
         } else {
             $tokens = \Cake\ORM\TableRegistry::get('Users')->find('list')->toArray();
-        }
-        // ToDo: tokens.length > 1000 のとき、分割処理
-        $request = [
-            'registration_ids' => array_values($tokens),
-            'priority' => 'high',
-            'notification' => [
-                'title' => $this->member->name,
-                'icon' => '@mipmap/notification',
-                'click_action' => 'TAKEMIYA_KEYAKI_NOTIFICATION_OFFICIAL_BLOG_UPDATE',
-                'body' => $this->title,
-                'sound' => 'default',
-            ],
-            'data' => [
-                'url' => \Cake\Core\Configure::read('post.url').$this->id,
-            ],
-        ];
-        \Cake\Log\Log::debug('request: '.json_encode($request)); 
-        $response = $http->post('https://gcm-http.googleapis.com/gcm/send', json_encode($request), ['type' => 'json', 'headers' => ['Authorization' => 'key=' . \Cake\Core\Configure::read('gcm.api_key')]]);
-        \Cake\Log\Log::debug('response: '. $response->body());
+        }$data = ['url' => \Cake\Core\Configure::read('post.url').$this->id];
+        parent::push($tokens, $this->member->name, 'TAKEMIYA_KEYAKI_NOTIFICATION_OFFICIAL_BLOG_UPDATE', $this->title, $data);
     }
 
 }
