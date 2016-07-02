@@ -9,7 +9,7 @@ use Cake\ORM\Entity;
  */
 class AppEntity extends Entity {
 
-    public function push($tokens, $title, $action, $body, $data) {
+    public static function gcm($tokens, $title, $action, $body, $data) {
         $http = new Client();
         $chunkedTokens = array_chunk($tokens, 1000, true);
         foreach ($chunkedTokens as $t) {

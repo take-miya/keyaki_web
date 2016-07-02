@@ -38,7 +38,7 @@ class Topic extends AppEntity {
         $http = new Client();
         $tokens = \Cake\ORM\TableRegistry::get('Users')->find('list')->toArray();
         $data = ['url' => \Cake\Core\Configure::read('news.url')."{$this->id}"];
-        parent::push($tokens, '欅坂46ニュース', 'TAKEMIYA_KEYAKI_NOTIFICATION_OFFICIAL_NEWS_UPDATE', $this->title, $data);
+        self::gcm($tokens, '欅坂46ニュース', 'TAKEMIYA_KEYAKI_NOTIFICATION_OFFICIAL_NEWS_UPDATE', $this->title, $data);
     }
 
 }

@@ -38,7 +38,7 @@ class Item extends AppEntity {
         $matomeIdBit = 1 << ($this->matome_id - 1);
         $tokens = \Cake\ORM\TableRegistry::get('Users')->find('list')->where(['pushable_matomes &' => $matomeIdBit])->toArray();
         $data = ['url' => "{$this->url}"];
-        parent::push($tokens, $this->matome->title, 'TAKEMIYA_KEYAKI_NOTIFICATION_MATOME_UPDATE', $this->title, $data);
+        self::gcm($tokens, $this->matome->title, 'TAKEMIYA_KEYAKI_NOTIFICATION_MATOME_UPDATE', $this->title, $data);
     }
 
 }
