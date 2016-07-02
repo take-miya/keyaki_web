@@ -40,6 +40,7 @@ class Topic extends Entity {
         // ToDo: tokens.length > 1000 のとき、分割処理
         $request = [
             'registration_ids' => array_values($tokens),
+            'priority' => 'high',
             'notification' => [
                 'title' => '欅坂46ニュース',
                 'icon' => '@mipmap/notification',
