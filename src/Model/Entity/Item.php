@@ -2,9 +2,6 @@
 
 namespace App\Model\Entity;
 
-use Cake\ORM\Entity;
-use Cake\Network\Http\Client;
-
 /**
  * Item Entity.
  *
@@ -34,7 +31,6 @@ class Item extends AppEntity {
     ];
 
     public function push() {
-        $http = new Client();
         $matomeIdBit = 1 << ($this->matome_id - 1);
         $tokens = \Cake\ORM\TableRegistry::get('Users')->find('list')->where(['pushable_matomes &' => $matomeIdBit])->toArray();
         $data = ['url' => "{$this->url}"];

@@ -2,9 +2,6 @@
 
 namespace App\Model\Entity;
 
-use Cake\ORM\Entity;
-use Cake\Network\Http\Client;
-
 /**
  * Post Entity.
  *
@@ -37,7 +34,6 @@ class Post extends AppEntity {
     ];
 
     public function push() {
-        $http = new Client();
         if ($this->member_id < 33) {
             $memberIdBit = 1 << ($this->member_id - 1);
             $tokens = \Cake\ORM\TableRegistry::get('Users')->find('list')->where(['pushable_members &' => $memberIdBit])->toArray();

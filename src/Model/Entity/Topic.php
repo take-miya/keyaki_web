@@ -2,9 +2,6 @@
 
 namespace App\Model\Entity;
 
-use Cake\ORM\Entity;
-use Cake\Network\Http\Client;
-
 /**
  * Topic Entity.
  *
@@ -35,7 +32,6 @@ class Topic extends AppEntity {
     ];
 
     public function push() {
-        $http = new Client();
         $tokens = \Cake\ORM\TableRegistry::get('Users')->find('list')->toArray();
         $data = ['url' => \Cake\Core\Configure::read('news.url')."{$this->id}"];
         self::gcm($tokens, '欅坂46ニュース', 'TAKEMIYA_KEYAKI_NOTIFICATION_OFFICIAL_NEWS_UPDATE', $this->title, $data);
