@@ -35,6 +35,10 @@ class PostsTable extends Table
             'foreignKey' => 'member_id',
             'joinType' => 'INNER'
         ]);
+        
+        $this->hasMany('Photos', [
+            'foreignKey' => 'post_id',
+        ]);
     }
 
     /**
