@@ -22,7 +22,7 @@ class CheckNewsShell extends Shell {
             preg_match('/cd=([A-Za-z0-9]+)/', $topicUrl, $m);
             $topicId = $m[1];
             if (TableRegistry::get('Topics')->exists(['id' => $topicId])) {
-                break;
+                continue;
             } else {
                 $topic = TableRegistry::get('Topics')->newEntity(['id' => $topicId, 'title' => $topicTitle, 'published' => $topicTime]);
                 TableRegistry::get('Topics')->save($topic, ['push' => true]);
