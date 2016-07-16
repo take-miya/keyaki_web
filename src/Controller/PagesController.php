@@ -18,10 +18,10 @@ class PagesController extends AppController {
             $updatedFrom = $this->request->query['updated_from'];
         }
         if ($this->request->is('get')) {
-            $page = $this->Pages->find()->where(['modified >' => $updatedFrom])->orderDesc('modified');
+            $pages = $this->Pages->find()->where(['modified >' => $updatedFrom])->orderDesc('modified');
             $last_updated = $this->Pages->find()->max('modified')->modified;
             $result = 'success';
         }
-        echo json_encode(compact('result', 'last_updated', 'page'));
+        echo json_encode(compact('result', 'last_updated', 'pages'));
     }
 }
