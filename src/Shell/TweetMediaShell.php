@@ -13,7 +13,7 @@ class TweetMediaShell extends Shell {
 
     public function main() {
         $posts = TableRegistry::get('Posts')->find()->where(['twitter_media_url IS' => NULL]);
-        //$posts = TableRegistry::get('Posts')->find();
+        //$posts = TableRegistry::get('Posts')->find()->where(['id'=>4464]);
 
         foreach ($posts as $post) {
             if (!$post) {
@@ -22,6 +22,7 @@ class TweetMediaShell extends Shell {
             $postUrl = \Cake\Core\Configure::read('post.url') . $post->id;
             var_dump($postUrl);
             $page = file_get_contents($postUrl);
+            $page= str_replace('<meta http-equiv="content-type" content="text/html; charset=Shift_JIS">', '', $page);
 
             $post->twitter_media_url = '';
             if ($page) {
