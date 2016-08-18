@@ -12,6 +12,7 @@ class CheckBlogShell extends Shell {
     public function main() {
         $url = \Cake\Core\Configure::read('blog.url');
         $page = file_get_contents($url);
+        $page = preg_replace('<meta http-equiv="content-type" content="text/html; charset=[0-9a-zA-Z_]+">', '', $page);
         $phpQuery = \phpQuery::newDocument($page);
         foreach ($phpQuery['.slider']->find('ul')->find('li') as $li) {
             $postUrl = pq($li)->find('a')->attr('href');

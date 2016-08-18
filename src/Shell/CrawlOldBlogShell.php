@@ -11,12 +11,15 @@ class CrawlOldBlogShell extends Shell {
 
     public function main() {
         $base = 'http://www.keyakizaka46.com/mob/news/diarKiji.php?site=k46o&ima=4652&rw=20&cd=member&page=';
-        for ($i = 0; $i < 102; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             $url = $base . $i;
 var_dump($url);
             $page = file_get_contents($url);
+            $page = preg_replace('<meta http-equiv="content-type" content="text/html; charset=[0-9a-zA-Z_]+">', '', $page);
             $phpQuery = \phpQuery::newDocument($page);
+            $flag = false;
             foreach ($phpQuery->find('article') as $article) {
+                $flag = true;
                 $a = pq($article)->find('h3')->find('a');
                 $postTitle = trim($a->text());
 var_dump($postTitle);
@@ -36,6 +39,9 @@ var_dump($postMemberName);
                     $post = TableRegistry::get('Posts')->newEntity(['id' => $postId, 'member_id' => $member->id, 'title' => $postTitle, 'published' => $postTime]);
                     TableRegistry::get('Posts')->save($post, ['push' => false]);
                 }
+            }
+            if (!$flag) {
+                break;
             }
         }
     }
