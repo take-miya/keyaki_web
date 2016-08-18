@@ -37,7 +37,7 @@ var_dump($postMemberName);
                 } else {
                     $member = TableRegistry::get('Members')->find()->where(['name' => $postMemberName])->first();
                     $post = TableRegistry::get('Posts')->newEntity(['id' => $postId, 'member_id' => $member->id, 'title' => $postTitle, 'published' => $postTime]);
-                    TableRegistry::get('Posts')->save($post, ['push' => false]);
+                    TableRegistry::get('Posts')->save($post, ['push' => true]);
                 }
             }
             if (!$flag) {
