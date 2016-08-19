@@ -42,7 +42,8 @@ class Post extends AppEntity {
             $tokens = \Cake\ORM\TableRegistry::get('Users')->find('list')->where(['pushable_members2 &' => $memberIdBit])->toArray();
         } else {
             $tokens = \Cake\ORM\TableRegistry::get('Users')->find('list')->toArray();
-        }$data = ['url' => \Cake\Core\Configure::read('post.url').$this->id];
+        }
+        $data = ['url' => \Cake\Core\Configure::read('post.url').$this->id];
         self::gcm($tokens, $this->member->name, 'TAKEMIYA_KEYAKI_NOTIFICATION_OFFICIAL_BLOG_UPDATE', $this->title, $data);
     }
 
