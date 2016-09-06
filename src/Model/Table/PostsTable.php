@@ -77,6 +77,13 @@ class PostsTable extends Table
         $rules->add($rules->existsIn(['member_id'], 'Members'));
         return $rules;
     }
+
+    public function beforeMarshal($event, $data, $option)
+    {
+        if (!$data['title']) {
+            $data['title'] = ' ';
+        }
+    }
     
     public function afterSaveCommit($event, $entity, $option)
     {
