@@ -44,6 +44,7 @@ var_dump($postMemberName);
             if (!$flag) {
                 break;
             }
+            sleep(5);
         }
     }
 
