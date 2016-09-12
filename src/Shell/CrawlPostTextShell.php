@@ -17,6 +17,7 @@ class CrawlPostTextShell extends Shell {
                 return;
             }
             $postUrl = \Cake\Core\Configure::read('post.url') . $post->id;
+var_dump($postUrl);
             $page = file_get_contents($postUrl);
             $page = preg_replace('<meta http-equiv="content-type" content="text/html; charset=[0-9a-zA-Z_]+">', '', $page);
 
@@ -28,7 +29,9 @@ class CrawlPostTextShell extends Shell {
             } else {
                 \Cake\Log\Log::error('cannot fetch blog url:' . $postUrl);
             }
+            $post->modified = $post->modified;
             TableRegistry::get('Posts')->save($post);
+            sleep(5);
         }
     }
 
