@@ -29,6 +29,7 @@ class Post extends AppEntity {
     ];
     
     protected $_hidden = [
+        'text',
         'created',
         'modified',
     ];
