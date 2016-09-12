@@ -13,14 +13,12 @@ class TweetMediaShell extends Shell {
 
     public function main() {
         $posts = TableRegistry::get('Posts')->find()->where(['twitter_media_url IS' => NULL]);
-        //$posts = TableRegistry::get('Posts')->find()->where(['id'=>4464]);
 
         foreach ($posts as $post) {
             if (!$post) {
                 return;
             }
             $postUrl = \Cake\Core\Configure::read('post.url') . $post->id;
-            var_dump($postUrl);
             $page = file_get_contents($postUrl);
             $page = preg_replace('<meta http-equiv="content-type" content="text/html; charset=[0-9a-zA-Z_]+">', '', $page);
 
@@ -29,13 +27,13 @@ class TweetMediaShell extends Shell {
                 $phpQuery = \phpQuery::newDocument($page);
                 $count = 0;
                 $imgPath = [];
+                $post->text = htmlspecialchars(pq($phpQuery['.box-article'])->text());
                 foreach ($phpQuery['.box-article']->find('img') as $img) {
                     $src = $img->getAttribute('src');
                     if ($src == '') {
                         continue;
                     }
                     $src = 'http://www.keyakizaka46.com' . $src;
-                    var_dump($src);
                     $photo = TableRegistry::get('Photos')->newEntity();
                     $photo->url = $src;
                     $photo->post_id = $post->id;

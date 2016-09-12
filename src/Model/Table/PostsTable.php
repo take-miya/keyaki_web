@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model\Table;
 
 use App\Model\Entity\Post;
@@ -12,8 +13,7 @@ use Cake\Validation\Validator;
  *
  * @property \Cake\ORM\Association\BelongsTo $Members
  */
-class PostsTable extends Table
-{
+class PostsTable extends Table {
 
     /**
      * Initialize method
@@ -21,8 +21,7 @@ class PostsTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
-    {
+    public function initialize(array $config) {
         parent::initialize($config);
 
         $this->table('posts');
@@ -35,7 +34,7 @@ class PostsTable extends Table
             'foreignKey' => 'member_id',
             'joinType' => 'INNER'
         ]);
-        
+
         $this->hasMany('Photos', [
             'foreignKey' => 'post_id',
         ]);
@@ -47,16 +46,15 @@ class PostsTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
-    {
+    public function validationDefault(Validator $validator) {
         $validator
-            ->integer('id')
-            ->allowEmpty('id', 'create');
+                ->integer('id')
+                ->allowEmpty('id', 'create');
 
         $validator
-            ->requirePresence('title', 'create')
-            ->notEmpty('title');
-        
+                ->requirePresence('title', 'create')
+                ->notEmpty('title');
+
         $validator
                 ->requirePresence('published', 'create')
                 ->notEmpty('published')
@@ -72,23 +70,21 @@ class PostsTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
-    {
+    public function buildRules(RulesChecker $rules) {
         $rules->add($rules->existsIn(['member_id'], 'Members'));
         return $rules;
     }
 
-    public function beforeMarshal($event, $data, $option)
-    {
+    public function beforeMarshal($event, $data, $option) {
         if (!$data['title']) {
             $data['title'] = ' ';
         }
     }
-    
-    public function afterSaveCommit($event, $entity, $option)
-    {
+
+    public function afterSaveCommit($event, $entity, $option) {
         if (isset($option['push']) && $option['push'] === true) {
             $entity->push();
         }
     }
+
 }
