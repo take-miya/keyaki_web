@@ -24,4 +24,20 @@ class PostsController extends AppController {
         }
         echo json_encode(compact('result', 'last_updated', 'posts'));
     }
+
+    public function search() {
+        $this->autoRender = false;
+
+        if ($this->request->is('get')) {
+            if (isset($this->request->query['word'])) {
+                $word = $this->request->query['word'];
+                $ids = $this->Posts->find()->where(['text LIKE' => "%$word%"])->orderDesc('modified')->extract('id');
+                $result = 'success';
+            } else {
+                $result = 'error';
+            }
+        }
+        echo json_encode(compact('result', 'ids'));
+    }
+
 }
