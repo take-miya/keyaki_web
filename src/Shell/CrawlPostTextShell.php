@@ -10,7 +10,7 @@ use Cake\ORM\TableRegistry;
 class CrawlPostTextShell extends Shell {
 
     public function main() {
-        $posts = TableRegistry::get('Posts')->find()->where(['text IS' => NULL]);
+        $posts = TableRegistry::get('Posts')->find()->where(['text IS' => NULL, 'deleted IS' => NULL]);
 
         foreach ($posts as $post) {
             if (!$post) {
@@ -23,15 +23,13 @@ var_dump($postUrl);
 
             if ($page) {
                 $phpQuery = \phpQuery::newDocument($page);
-                $count = 0;
-                $imgPath = [];
                 $post->text = htmlspecialchars(pq($phpQuery['.box-article'])->text());
             } else {
                 \Cake\Log\Log::error('cannot fetch blog url:' . $postUrl);
             }
             $post->modified = $post->modified;
             TableRegistry::get('Posts')->save($post);
-            sleep(5);
+            sleep(2);
         }
     }
 
