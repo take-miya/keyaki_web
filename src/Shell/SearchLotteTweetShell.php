@@ -14,9 +14,9 @@ class SearchLotteTweetShell extends Shell {
 	$search_key = "#つぶやきCM -RT";
 	$options = ['q' => $search_key, 'count' => '100'];
 
-	$since_id = TableRegistry::get('Tweets')->find()->min('id')->id;
+	$since_id = TableRegistry::get('Tweets')->find()->max('id')->id;
 	if ($since_id){
-    		$options['max_id'] = (string)$since_id; //前回の最後に取得したツイートIDから
+    		$options['since_id'] = (string)$since_id; //前回の最後に取得したツイートIDから
 	}
 var_dump($options);
 	$twObj = new TwitterOAuth("z6WEG2AL0ozYvnjY2zoNgRH6i", "WV4YECZBWmDzxXEa0gJdISgxFXy3cjLdq2bFvvHChz8DMuFFrO", "727086553428688898-nSVZbnnEBsUqNj7FN1Y1ukUOb64fkKp", "yIdsiyC7tqotRQAQ1QULGrPUF41CRvB9V0kXH58o0jhD2");
