@@ -70,6 +70,7 @@ class TweetMediaShell extends Shell {
         $mediaIds = [];
         $connection = self::getConnection();
         foreach ($imgPath as $path) {
+            if (filesize($path) > 2 * 1000 * 1000) continue;
             $media = $connection->upload('media/upload', ['media' => $path]);
             if ($connection->getLastHttpCode() == 200) {
                 $mediaIds[] = $media->media_id_string;
