@@ -33,7 +33,14 @@ class CheckBlogShell extends Shell {
             preg_match('/\/s\/k46o\/diary\/detail\/(\d+)/', $postUrl, $m);
             $postId = (int) $m[1];
             if (TableRegistry::get('Posts')->exists(['id' => $postId])) {
-                continue;
+                if (!TableRegistry::get('Posts')->exists(['id' => $postId, 'deleted' => '1900-00-00 00:00:00'])) {
+                    continue;
+                } else {
+                $member = TableRegistry::get('Members')->find()->where(['name' => $postMemberName])->first();
+                $post = TableRegistry::get('Posts')->newEntity(['id' => $postId, 'title' => $postTitle, 'published' => $postTime, 'deleted' => null]);
+                $post->member = $member;
+                TableRegistry::get('Posts')->save($post, ['push' => true]);
+                }
             } else {
                 $member = TableRegistry::get('Members')->find()->where(['name' => $postMemberName])->first();
                 $post = TableRegistry::get('Posts')->newEntity(['id' => $postId, 'title' => $postTitle, 'published' => $postTime, 'deleted' => null]);

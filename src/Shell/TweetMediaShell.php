@@ -18,7 +18,7 @@ class TweetMediaShell extends Shell {
             if (!$post) {
                 return;
             }
-            $postUrl = str_replace('%id%', ''.$post->id, \Cake\Core\Configure::read('post.url'));
+            $postUrl = \Cake\Core\Configure::read('post.url').$post->id;
 var_dump($postUrl);
             $page = file_get_contents($postUrl);
             $page = preg_replace('<meta http-equiv="content-type" content="text/html; charset=[0-9a-zA-Z_]+">', '', $page);

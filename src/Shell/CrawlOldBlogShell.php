@@ -10,7 +10,7 @@ require_once(WWW_ROOT . "php/phpQuery-onefile.php");
 class CrawlOldBlogShell extends Shell {
 
     public function main() {
-        $base = 'http://www.keyakizaka46.com/mob/news/diarKiji.php?site=k46o&ima=4652&rw=20&cd=member&page=';
+        $base = 'http://www.keyakizaka46.com/s/k46o/diary/member/list?ima=4652&rw=20&page=';
         for ($i = 0; $i < 10; $i++) {
             $url = $base . $i;
 var_dump($url);
