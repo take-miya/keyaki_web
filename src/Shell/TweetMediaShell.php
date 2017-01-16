@@ -18,7 +18,8 @@ class TweetMediaShell extends Shell {
             if (!$post) {
                 return;
             }
-            $postUrl = \Cake\Core\Configure::read('post.url') . $post->id;
+            $postUrl = str_replace('%id%', ''.$post->id, \Cake\Core\Configure::read('post.url'));
+var_dump($postUrl);
             $page = file_get_contents($postUrl);
             $page = preg_replace('<meta http-equiv="content-type" content="text/html; charset=[0-9a-zA-Z_]+">', '', $page);
 
@@ -28,6 +29,7 @@ class TweetMediaShell extends Shell {
                 $count = 0;
                 $imgPath = [];
                 $post->text = htmlspecialchars(pq($phpQuery['.box-article'])->text());
+var_dump($post->text);
                 foreach ($phpQuery['.box-article']->find('img') as $img) {
                     $src = $img->getAttribute('src');
                     if ($src == '') {
@@ -36,6 +38,7 @@ class TweetMediaShell extends Shell {
                     $src = 'http://www.keyakizaka46.com' . $src;
                     $photo = TableRegistry::get('Photos')->newEntity();
                     $photo->url = $src;
+var_dump($photo->url);
                     $photo->post_id = $post->id;
                     TableRegistry::get('Photos')->save($photo);
                     if (preg_match('/gif$/', $src)) {

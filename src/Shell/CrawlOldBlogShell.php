@@ -31,7 +31,7 @@ var_dump($postMemberName);
                     break;
                 }
 
-                preg_match('/id=(\d+)/', $postUrl, $m);
+                preg_match('/\/s\/k46o\/diary\/detail\/(\d+)/', $postUrl, $m);
                 $postId = (int) $m[1];
                 if (TableRegistry::get('Posts')->exists(['id' => $postId])) {
                 } else {

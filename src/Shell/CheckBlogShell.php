@@ -30,13 +30,13 @@ class CheckBlogShell extends Shell {
                 $postTime = \DateTime::createFromFormat('Y.m.d H:i:s', pq($time)->text() . ':00');
                 break;
             }
-            preg_match('/id=(\d+)/', $postUrl, $m);
+            preg_match('/\/s\/k46o\/diary\/detail\/(\d+)/', $postUrl, $m);
             $postId = (int) $m[1];
             if (TableRegistry::get('Posts')->exists(['id' => $postId])) {
                 continue;
             } else {
                 $member = TableRegistry::get('Members')->find()->where(['name' => $postMemberName])->first();
-                $post = TableRegistry::get('Posts')->newEntity(['id' => $postId, 'title' => $postTitle, 'published' => $postTime]);
+                $post = TableRegistry::get('Posts')->newEntity(['id' => $postId, 'title' => $postTitle, 'published' => $postTime, 'deleted' => null]);
                 $post->member = $member;
                 TableRegistry::get('Posts')->save($post, ['push' => true]);
             }
