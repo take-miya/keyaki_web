@@ -12,6 +12,7 @@ use App\Controller\AppController;
 class TopicsController extends AppController {
 
     public function index() {
+        $this->response->sharable(true, 3600);
         $this->autoRender = false;
         $updatedFrom = '2000-01-01T00:00:00+0900';
         if (isset($this->request->query['updated_from'])) {
