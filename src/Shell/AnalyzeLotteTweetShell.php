@@ -12,7 +12,7 @@ class AnalyzeLotteTweetShell extends Shell {
 	$tweets = TableRegistry::get('Tweets')->find();
 	foreach ($tweets as $tweet) {
 		$text = $tweet->text;
-		if (preg_match('/http:\/\/lottegum.jp\/shr\/([kh])([1-6])(100|([ab][a-z])+)/', $text, $m)) {
+		if (preg_match('/http:\/\/lottegum.jp\/shr\/([kh])([1-6])(00)/', $text, $m)) {
 			$team = $m[1];
 			$theme = $m[2];
 			$codes = str_split($m[3], 2);

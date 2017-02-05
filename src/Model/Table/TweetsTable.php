@@ -57,7 +57,7 @@ class TweetsTable extends Table
 
     public function afterSaveCommit($event, $entity, $option) {
 	$text = $entity->text;
-        if (preg_match('/http:\/\/lottegum.jp\/shr\/([kh])([1-6])(100|([ab][a-z])+)/', $text, $m)) {
+        if (preg_match('/http:\/\/lottegum.jp\/shr\/([kh])([1-6])(00|([ab][a-z])+)/', $text, $m)) {
 		$team = $m[1];
                 $theme = $m[2];
                 $codes = str_split($m[3], 2);

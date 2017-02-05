@@ -2,16 +2,16 @@
 
 return [
     'blog' => [
-        'url' => "http://www.keyakizaka46.com/mob/news/diarShw.php?site=k46o&cd=member",
+        'url' => "http://www.keyakizaka46.com/s/k46o/diary/member",
     ],
     'post' => [
-        'url' => "http://www.keyakizaka46.com/s/k46o/diary/detail/%id%?cd=member",
+        'url' => "http://www.keyakizaka46.com/s/k46o/diary/detail/",
     ],
     'top' => [
-        'url' => "http://www.keyakizaka46.com/mob/index.php?site=k46o",
+        'url' => "http://www.keyakizaka46.com/s/k46o/",
     ],
     'news' => [
-        'url' => "http://www.keyakizaka46.com/mob/news/newsShw.php?site=k46o&cd=",
+        'url' => "http://www.keyakizaka46.com/s/k46o/news/detail/",
     ],
 ];
 
