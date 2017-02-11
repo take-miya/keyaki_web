@@ -23,8 +23,8 @@ var_dump($postUrl);
             $page = file_get_contents($postUrl);
             $page = preg_replace('<meta http-equiv="content-type" content="text/html; charset=[0-9a-zA-Z_]+">', '', $page);
 
-            $post->twitter_media_url = '';
             if ($page) {
+                $post->twitter_media_url = '';
                 $phpQuery = \phpQuery::newDocument($page);
                 $count = 0;
                 $imgPath = [];
