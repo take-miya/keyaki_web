@@ -12,7 +12,7 @@ use Abraham\TwitterOAuth\TwitterOAuth;
 class TweetMediaShell extends Shell {
 
     public function main() {
-        $posts = TableRegistry::get('Posts')->find()->where(['twitter_media_url IS' => NULL]);
+        $posts = TableRegistry::get('Posts')->find()->where(['twitter_media_url IS' => NULL, 'deleted IS' => NULL]);
 
         foreach ($posts as $post) {
             if (!$post) {
@@ -62,10 +62,10 @@ var_dump($photo->url);
                 } else {
                     \Cake\Log\Log::error('no image url:' . $postUrl);
                 }
+                TableRegistry::get('Posts')->save($post);
             } else {
                 \Cake\Log\Log::error('cannot fetch blog url:' . $postUrl);
             }
-            TableRegistry::get('Posts')->save($post);
         }
     }
 
