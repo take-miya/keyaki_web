@@ -37,7 +37,9 @@ var_dump($post->text);
                     if ($src == '') {
                         continue;
                     }
-                    $src = 'http://www.keyakizaka46.com' . $src;
+                    if (preg_match('/^http:\/\/www\.keyakizaka46\.com.*$/', $src)) {
+                        $src = 'http://www.keyakizaka46.com' . $src;
+                    }
                     $photo = TableRegistry::get('Photos')->newEntity();
                     $photo->url = $src;
 var_dump($photo->url);
